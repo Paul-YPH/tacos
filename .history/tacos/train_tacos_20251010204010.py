@@ -71,7 +71,6 @@ class Tacos(object):
             edge_index = torch.load(path+'edge_index.pt')
         else:
             print('building graphs based on coordinate...')
-            print(adata.obsm['spatial'].shape)
             graph_list = utils.construct_graph(adata.obsm['spatial'],num_list)
             # graph = utils.merge_csr_graphs(graph_list)
             # edge_index = utils.adj_to_edge_index(graph)
@@ -95,7 +94,6 @@ class Tacos(object):
             node_cs = []
             assert len(edge_index) == len(num_list)
             flag = 0
-
             for i in range(len(edge_index)):
                 ew,nc = utils.community_augmentation(X[flag:flag+num_list[i],],edge_index[i],com_detection)
                 edge_weight.append(ew)
@@ -295,7 +293,7 @@ class Tacos(object):
         best_params = model.state_dict()
         embedding = None
         
-        # if args['cross_w'] !=0:
+        if args['cross_w'] !=0:
         
         if args['cross_w'] !=0:
             print('start mnn calculating')
@@ -323,7 +321,7 @@ class Tacos(object):
                 flag+=self.num_list[i]
         
         time1 = time.time()
-        # for epoch in range(args['epoch']):
+        for epoch in range(args['epoch']):
         
         if args['base']=='graphcl':
             b_xent = torch.nn.BCEWithLogitsLoss()
