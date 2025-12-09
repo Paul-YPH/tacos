@@ -360,7 +360,8 @@ def process_adata(
         Processed AnnData object
     """
     # Quality control
-    sc.pp.calculate_qc_metrics(adata, inplace=True)
+    #sc.pp.calculate_qc_metrics(adata, inplace=True)
+    sc.pp.calculate_qc_metrics(adata, percent_top=None, inplace=True)
     sc.pp.filter_cells(adata, min_genes=min_genes)
     
     # Gene filtering with marker protection
